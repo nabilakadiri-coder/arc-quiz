@@ -11,6 +11,8 @@ const resend = new Resend(process.env.RESEND_API_KEY)
 // 🔧 Nettoyage texte
 function normalizeText(value: unknown) {
   return String(value || '')
+    .replace(/œ/g, 'oe')
+    .replace(/Œ/g, 'oe')
     .normalize('NFD')
     .replace(/[\u0300-\u036f]/g, '')
     .toLowerCase()

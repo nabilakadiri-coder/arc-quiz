@@ -138,6 +138,7 @@ export default function ArcQuizV1() {
   const [nom, setNom] = useState('')
   const [email, setEmail] = useState('')
   const [telephone, setTelephone] = useState('')
+  const [rgpdAccepted, setRgpdAccepted] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
 
   const progress = useMemo(() => {
@@ -154,7 +155,7 @@ export default function ArcQuizV1() {
   }
 
   async function handleSubmitLead() {
-    if (!prenom.trim() || !nom.trim() || !email.trim() || !finalProfile) return
+    if (!prenom.trim() || !nom.trim() || !email.trim() || !finalProfile || !rgpdAccepted) return
 
     setIsSubmitting(true)
 
@@ -279,6 +280,7 @@ export default function ArcQuizV1() {
             </div>
           </section>
         ) : step === 'capture' ? (
+          
           <section className="rounded-3xl border border-[#6f5a24] bg-[#11151c] p-6 shadow-xl shadow-black/20 md:p-10">
             <p className="text-sm uppercase tracking-[0.35em] text-[#c8a74e]">Dernière étape</p>
             <h2 className="mt-4 text-4xl font-bold text-white">Votre profil est prêt.</h2>
@@ -314,9 +316,19 @@ export default function ArcQuizV1() {
                 className="rounded-2xl border border-white/10 bg-white/5 px-4 py-4 text-white placeholder:text-white/40 focus:border-[#c8a74e] focus:outline-none md:col-span-2"
               />
             </div>
-
+<div className="mt-4 flex items-start gap-3">
+  <input
+    type="checkbox"
+    checked={rgpdAccepted}
+    onChange={(e) => setRgpdAccepted(e.target.checked)}
+    className="mt-1 accent-[#c8a74e]"
+  />
+  <p className="text-sm text-white/70">
+    J’accepte d’être recontacté(e) dans le cadre de cet événement et de recevoir des informations liées au programme A.R.C.
+  </p>
+</div>
             <button
-              disabled={isSubmitting || !prenom.trim() || !nom.trim() || !email.trim()}
+              disabled={isSubmitting || !prenom.trim() || !nom.trim() || !email.trim() || !rgpdAccepted}
               onClick={handleSubmitLead}
               className="mt-8 rounded-2xl bg-[#c8a74e] px-8 py-4 text-lg font-semibold text-[#11151c] disabled:cursor-not-allowed disabled:opacity-40"
             >
